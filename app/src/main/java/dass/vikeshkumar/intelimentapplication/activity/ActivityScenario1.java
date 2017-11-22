@@ -1,4 +1,4 @@
-package dass.vikeshkumar.intelimentapplication.main;
+package dass.vikeshkumar.intelimentapplication.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,7 +57,7 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
 
     @Override
     public void onFragmentInteraction(final String name) {
-        //running this action on the main UI thread.
+        //running this action on the activity UI thread.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

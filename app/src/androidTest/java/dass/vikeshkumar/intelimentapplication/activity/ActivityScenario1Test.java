@@ -1,4 +1,4 @@
-package dass.vikeshkumar.intelimentapplication.main;
+package dass.vikeshkumar.intelimentapplication.activity;
 
 
 import android.support.test.espresso.ViewInteraction;

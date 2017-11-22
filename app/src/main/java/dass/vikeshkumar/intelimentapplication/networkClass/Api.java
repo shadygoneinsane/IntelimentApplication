@@ -8,11 +8,12 @@ import retrofit2.http.GET;
 
 /**
  * Created by vikesh on 22-11-2017.
+ * api interface for retrofit
  */
 
 public interface Api {
     String BASE_URL = "http://express-it.optusnet.com.au/";
 
     @GET("sample.json")
-    Call<List<TransportInfo>> getTrandportInfo();
+    Call<List<TransportInfo>> getTransportInfo();
 }

@@ -2,4 +2,5 @@
     <string name="app_name">Inteliment App</string>
 
     <string name="fragment_name">Fragment no. </string>
+    <string name="title_activity_maps">Map</string>
 </resources>
