@@ -14,6 +14,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by vikesh on 22-11-2017.
+ * Fragment hosting view pager
  */
 public class ViewPagerFragment extends Fragment {
 
@@ -27,8 +28,8 @@ public class ViewPagerFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ViewPager viewpager = view.findViewById(R.id.viewpager);
         CircleIndicator indicator = view.findViewById(R.id.indicator);
-        viewpager.setAdapter(new ViewPagerAdapter(4));
+        viewpager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 4));
         indicator.setViewPager(viewpager);
-        viewpager.setCurrentItem(2);
+        viewpager.setCurrentItem(1);
     }
 }

@@ -1,66 +1,43 @@
 package dass.vikeshkumar.intelimentapplication.adapter;
 
-import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.Random;
+import dass.vikeshkumar.intelimentapplication.fragments.DetailsFragment;
 
-public class ViewPagerAdapter extends PagerAdapter {
+/**
+ * Created by a593038 on 03-10-2016.
+ * Adapter for ViewPager using Fragments
+ */
 
-    private final Random random = new Random();
-    private int mSize;
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    public ViewPagerAdapter(int count) {
-        mSize = count;
+    private int NumbOfTabs;
+
+    public ViewPagerAdapter(FragmentManager fm, int mNumbOfTabs) {
+        super(fm);
+        this.NumbOfTabs = mNumbOfTabs;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        switch (position) {
+            case 0: // Fragment # 0 - This will show FirstFragment
+                return DetailsFragment.newInstance(position, "Page # 1");
+            case 1: // Fragment # 0 - This will show SecondFragment different title
+                return DetailsFragment.newInstance(position, "Page # 2");
+            case 2: // Fragment # 1 - This will show ThirdFragment
+                return DetailsFragment.newInstance(position, "Page # 3");
+            case 3: // Fragment # 1 - This will show FourthFragment
+                return DetailsFragment.newInstance(position, "Page # 3");
+            default:
+                return null;
+        }
     }
 
     @Override
     public int getCount() {
-        return mSize;
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup view, int position, Object object) {
-        view.removeView((View) object);
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup view, final int position) {
-        TextView textView = new TextView(view.getContext());
-        textView.setText(String.valueOf(position + 1));
-        textView.setBackgroundColor(0xff000000 | random.nextInt(0x00ffffff));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.WHITE);
-        textView.setTextSize(28);
-        view.addView(textView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Fragment number is : " + (position + 1), Toast.LENGTH_SHORT).show();
-            }
-        });
-        return textView;
-    }
-
-    public void addItem() {
-        mSize++;
-        notifyDataSetChanged();
-    }
-
-    public void removeItem() {
-        mSize--;
-        mSize = mSize < 0 ? 0 : mSize;
-
-        notifyDataSetChanged();
+        return NumbOfTabs;
     }
 }
