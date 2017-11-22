@@ -15,11 +15,13 @@ import dass.vikeshkumar.intelimentapplication.fragments.ViewPagerFragment;
 
 /**
  * Created by vikesh on 22-11-2017.
+ * Main Activity for Scenario 1
  */
 public class ActivityScenario1 extends AppCompatActivity implements FragmentTopRecyclerItems.OnFragmentInteractionListener, View.OnClickListener {
     private TextView item_name_from_list_top;
-    private Button redBtn, bluBtn, greenBtn;
     private LinearLayout parent_item5;
+    private String fragmentName;
+    private int referenceForColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +30,9 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
 
         item_name_from_list_top = findViewById(R.id.item_name_from_list_top);
         parent_item5 = findViewById(R.id.item5);
-        redBtn = findViewById(R.id.redButton);
-        bluBtn = findViewById(R.id.blueButton);
-        greenBtn = findViewById(R.id.greenButton);
+        Button redBtn = findViewById(R.id.redButton);
+        Button bluBtn = findViewById(R.id.blueButton);
+        Button greenBtn = findViewById(R.id.greenButton);
         redBtn.setOnClickListener(this);
         bluBtn.setOnClickListener(this);
         greenBtn.setOnClickListener(this);
@@ -40,9 +42,17 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_item1, fragment);
 
-        fragment = Fragment.instantiate(this, ViewPagerFragment.class.getName());
+        fragment = ViewPagerFragment.newInstance(0, "");
         fragmentTransaction.replace(R.id.fragment_item2, fragment);
         fragmentTransaction.commit();
+
+        if (savedInstanceState != null) {
+            referenceForColor = savedInstanceState.getInt("referenceForColor");
+            fragmentName = savedInstanceState.getString("fragmentName");
+            parent_item5.setBackgroundColor(referenceForColor);
+            item_name_from_list_top.setText(fragmentName);
+        }
+
     }
 
     @Override
@@ -54,23 +64,32 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
                 item_name_from_list_top.setText(name);
             }
         });
+        fragmentName = name;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.redButton:
-                parent_item5.setBackgroundColor(getResources().getColor(R.color.red));
+                referenceForColor = (getResources().getColor(R.color.red));
                 break;
 
             case R.id.blueButton:
-                parent_item5.setBackgroundColor(getResources().getColor(R.color.blue));
+                referenceForColor = (getResources().getColor(R.color.blue));
                 break;
 
             case R.id.greenButton:
-                parent_item5.setBackgroundColor(getResources().getColor(R.color.green));
+                referenceForColor = (getResources().getColor(R.color.green));
                 break;
         }
+        parent_item5.setBackgroundColor(referenceForColor);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("referenceForColor", referenceForColor);
+        savedInstanceState.putString("fragmentName", fragmentName);
     }
 
     @Override
