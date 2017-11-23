@@ -14,8 +14,7 @@ import dass.vikeshkumar.intelimentapplication.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private Double latitude,longitude;
+    private Double latitude, longitude;
     private String title;
 
     @Override
@@ -27,7 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        latitude =  getIntent().getDoubleExtra("lat", -34);
+        latitude = getIntent().getDoubleExtra("lat", -34);
         longitude = getIntent().getDoubleExtra("long", 151);
         title = getIntent().getStringExtra("title");
     }
@@ -44,12 +43,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
         //LatLng sydney = new LatLng(-34, 151);
         LatLng location = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(location).title(title));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
     }
 }

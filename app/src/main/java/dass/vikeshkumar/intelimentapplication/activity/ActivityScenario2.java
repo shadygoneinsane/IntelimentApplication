@@ -147,6 +147,7 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
         builder.setTitle(getString(R.string.map_alert_msg));
         builder.setPositiveButton(R.string.open_map_app, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                String BaseMapURI = "http://maps.google.com/maps?q=loc:";
                 String geoUri = BaseMapURI + latitude + "," + longitude + " (" + name + ")";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
                 startActivity(intent);

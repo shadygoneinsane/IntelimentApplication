@@ -17,8 +17,6 @@ import me.relex.circleindicator.CircleIndicator;
  */
 public class ViewPagerFragment extends Fragment {
 
-    private int pageNo;
-
     public ViewPagerFragment() {
 
     }
