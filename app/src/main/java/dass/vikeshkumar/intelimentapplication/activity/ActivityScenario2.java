@@ -34,6 +34,7 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
     private Button navigateBtn;
     private String name;
     private Double latitude, longitude;
+    private String BaseMapURI = "http://maps.google.com/maps?q=loc:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,13 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
         if (Utils.isNetworkAvailable(ActivityScenario2.this))
             getTransportList();
         else
-            showToast("No Network");
+            showToast(getString(R.string.no_network));
     }
 
     private void showToast(String message) {
+        String[] str = {message};
+        adapter = new ArrayAdapter<>(ActivityScenario2.this, android.R.layout.simple_spinner_dropdown_item, str);
+        dropdown.setAdapter(adapter);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -93,7 +97,6 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-        //modeOfTransport.setText(adapterView.getItemAtPosition(pos));
         if (transportInfo != null) {
             carTransport.setText(transportInfo.get(pos).getFromcentral().getCar());
             trainTransport.setText(transportInfo.get(pos).getFromcentral().getTrain());
@@ -119,21 +122,20 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
 
     private void alert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityScenario2.this);
-        builder.setMessage("Choose")
-                .setTitle("Would you like to view the location inside map app");
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.map_alert_msg));
+        builder.setPositiveButton(R.string.open_map_app, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                String geoUri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + name + ")";
+                String geoUri = BaseMapURI + latitude + "," + longitude + " (" + name + ")";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
                 startActivity(intent);
             }
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.open_here, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = new Intent(ActivityScenario2.this, MapsActivity.class);
-                intent.putExtra("lat",latitude);
-                intent.putExtra("long",longitude);
-                intent.putExtra("title",name);
+                intent.putExtra("lat", latitude);
+                intent.putExtra("long", longitude);
+                intent.putExtra("title", name);
 
                 startActivity(intent);
             }

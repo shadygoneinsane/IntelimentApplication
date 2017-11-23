@@ -21,11 +21,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.ActivityScenario1"></activity>
         <activity android:name=".activity.ActivityScenario2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!--
@@ -46,6 +42,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="dass.vikeshkumar.intelimentapplication.activity.ActivityScenario2" />
+        </activity>
+        <activity android:name=".activity.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

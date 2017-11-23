@@ -18,10 +18,7 @@ import dass.vikeshkumar.intelimentapplication.R;
  */
 public class DetailsFragment extends Fragment {
 
-    //For storing variables - title and page number
-    private String title;
     private int page;
-    private FrameLayout parentFrag;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -41,12 +38,12 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         page = getArguments().getInt("pageNo");
-        title = getArguments().getString("titleName");
+        String title = getArguments().getString("titleName");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         TextView fragName = view.findViewById(R.id.fragment_name);
         fragName.setText(getString(R.string.fragment_name) + page);
-        parentFrag = view.findViewById(R.id.parentFrag);
+        FrameLayout parentFrag = view.findViewById(R.id.parentFrag);
         parentFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

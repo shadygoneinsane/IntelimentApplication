@@ -3,4 +3,23 @@
 
     <string name="fragment_name">Fragment no. </string>
     <string name="title_activity_maps">Map</string>
+    <string name="display_items">Displaying ITEM from 1st List :</string>
+    <string name="TextView1">TextView1</string>
+    <string name="TextView2">TextView2</string>
+    <string name="TextView3">TextView3</string>
+    <string name="red">red</string>
+    <string name="blue">blue</string>
+    <string name="green">green</string>
+    <string name="Scenario_1">Scenario 1</string>
+    <string name="Scenario_11">Scenario II</string>
+    <string name="map_alert_msg">Where would you like to view the location ?</string>
+    <string name="open_here">Inteliment app</string>
+    <string name="open_map_app">Maps app</string>
+    <string name="navigate">Navigate</string>
+    <string name="oo">00</string>
+    <string name="train">Train :</string>
+    <string name="car">Car :</string>
+    <string name="mode_of_transport">Mode Of Transport</string>
+    <string name="no_network">No Network</string>
+
 </resources>
