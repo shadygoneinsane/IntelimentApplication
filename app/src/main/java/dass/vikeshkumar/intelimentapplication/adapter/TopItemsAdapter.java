@@ -22,11 +22,11 @@ public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tV_name;
+        private final TextView item_name;
 
         private ViewHolder(View v) {
             super(v);
-            tV_name = v.findViewById(R.id.textView);
+            item_name = v.findViewById(R.id.itemName);
         }
     }
 
@@ -37,8 +37,8 @@ public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        viewHolder.tV_name.setText(itemsDataSet.get(position));
-        viewHolder.tV_name.setOnClickListener(new View.OnClickListener() {
+        viewHolder.item_name.setText(itemsDataSet.get(position));
+        viewHolder.item_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {

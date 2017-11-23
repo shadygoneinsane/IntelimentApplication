@@ -59,7 +59,7 @@ public class ActivityScenario1Test {
         button2.check(matches(isDisplayed()));
 
         ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.textView), withText("item 3"),
+                allOf(withId(R.id.itemName), withText("item 3"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.top_items_recycler_view),
@@ -69,7 +69,7 @@ public class ActivityScenario1Test {
         appCompatTextView.perform(click());
 
         ViewInteraction appCompatTextView2 = onView(
-                allOf(withId(R.id.textView), withText("item 4"),
+                allOf(withId(R.id.itemName), withText("item 4"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.top_items_recycler_view),
