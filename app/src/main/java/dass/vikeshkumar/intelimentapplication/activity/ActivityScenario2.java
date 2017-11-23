@@ -17,7 +17,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import dass.vikeshkumar.intelimentapplication.R;
-import dass.vikeshkumar.intelimentapplication.networkClass.Api;
 import dass.vikeshkumar.intelimentapplication.utility.TransportInfo;
 import dass.vikeshkumar.intelimentapplication.utility.Utils;
 import retrofit2.Call;
@@ -25,32 +24,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 public class ActivityScenario2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private ArrayAdapter<String> adapter;
     private Spinner dropdown;
-    private TextView carTransport, trainTransport;
+    private TextView carTransportTime, trainTransportTime, trainTransportLabel, carTransportLabel;
     private List<TransportInfo> transportInfo;
     private Button navigateBtn;
     private String name;
     private Double latitude, longitude;
     private String BaseMapURI = "http://maps.google.com/maps?q=loc:";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scenario2);
         dropdown = findViewById(R.id.spinner);
-        carTransport = findViewById(R.id.CarTransport);
-        trainTransport = findViewById(R.id.TrainTransport);
+        carTransportTime = findViewById(R.id.CarTransport);
+        trainTransportTime = findViewById(R.id.TrainTransport);
         navigateBtn = findViewById(R.id.navigateBtn);
-
-        if (Utils.isNetworkAvailable(ActivityScenario2.this))
+        trainTransportLabel = findViewById(R.id.trainTransportLabel);
+        carTransportLabel = findViewById(R.id.carTransportLabel);
+        if (Utils.isNetworkAvailable(ActivityScenario2.this)) {
             getTransportList();
-        else
+        } else {
             showToast(getString(R.string.no_network));
+        }
     }
 
+    /* For showing error message*/
     private void showToast(String message) {
         String[] str = {message};
         adapter = new ArrayAdapter<>(ActivityScenario2.this, android.R.layout.simple_spinner_dropdown_item, str);
@@ -73,33 +77,50 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
             public void onResponse(Call<List<TransportInfo>> call, Response<List<TransportInfo>> response) {
                 transportInfo = response.body();
 
-                //Creating an String array for the ListView
                 String[] locations = new String[transportInfo.size()];
 
-                //looping through all the locations and inserting the names inside the string array
                 for (int i = 0; i < transportInfo.size(); i++) {
                     locations[i] = transportInfo.get(i).getName();
                 }
-
-                //displaying the string array into list view
-                adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, locations);
-                dropdown.setAdapter(adapter);
-                dropdown.setOnItemSelectedListener(ActivityScenario2.this);
-                navigateBtn.setOnClickListener(ActivityScenario2.this);
+                setAdapter(locations);
             }
 
             @Override
             public void onFailure(Call<List<TransportInfo>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                showToast(getString(R.string.no_network));
             }
         });
+    }
+
+    private void setAdapter(final String[] locations) {
+        adapter = new ArrayAdapter<>(ActivityScenario2.this, android.R.layout.simple_spinner_dropdown_item, locations);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(ActivityScenario2.this);
+        navigateBtn.setOnClickListener(ActivityScenario2.this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
         if (transportInfo != null) {
-            carTransport.setText(transportInfo.get(pos).getFromcentral().getCar());
-            trainTransport.setText(transportInfo.get(pos).getFromcentral().getTrain());
+            if (transportInfo.get(pos).getFromcentral().getCar() != null) {
+                carTransportTime.setVisibility(View.VISIBLE);
+                carTransportLabel.setVisibility(View.VISIBLE);
+                carTransportTime.setText(transportInfo.get(pos).getFromcentral().getCar());
+            } else {
+                carTransportTime.setVisibility(View.GONE);
+                carTransportLabel.setVisibility(View.GONE);
+            }
+
+            if (transportInfo.get(pos).getFromcentral().getTrain() != null) {
+                trainTransportTime.setVisibility(View.VISIBLE);
+                trainTransportLabel.setVisibility(View.VISIBLE);
+                trainTransportTime.setText(transportInfo.get(pos).getFromcentral().getTrain());
+            } else {
+                trainTransportTime.setVisibility(View.GONE);
+                trainTransportLabel.setVisibility(View.GONE);
+            }
+
             name = transportInfo.get(pos).getName();
             latitude = Double.valueOf(transportInfo.get(pos).getLocation().getLatitude());
             longitude = Double.valueOf(transportInfo.get(pos).getLocation().getLongitude());
@@ -108,7 +129,6 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @Override
@@ -116,6 +136,8 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
         if (view.getId() == R.id.navigateBtn) {
             if (transportInfo != null) {
                 alert();
+            } else {
+                showToast(getString(R.string.no_network));
             }
         }
     }
@@ -136,12 +158,17 @@ public class ActivityScenario2 extends AppCompatActivity implements AdapterView.
                 intent.putExtra("lat", latitude);
                 intent.putExtra("long", longitude);
                 intent.putExtra("title", name);
-
                 startActivity(intent);
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
 
+    public interface Api {
+        String BASE_URL = "http://express-it.optusnet.com.au/";
+
+        @GET("sample.json")
+        Call<List<TransportInfo>> getTransportInfo();
     }
 }

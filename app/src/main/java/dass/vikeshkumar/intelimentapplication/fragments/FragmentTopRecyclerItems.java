@@ -1,6 +1,5 @@
 package dass.vikeshkumar.intelimentapplication.fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,22 +13,16 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import dass.vikeshkumar.intelimentapplication.R;
-import dass.vikeshkumar.intelimentapplication.adapter.TopItemAdapter;
+import dass.vikeshkumar.intelimentapplication.adapter.TopItemsAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentTopRecyclerItems extends Fragment {
-    //Listener used to communicate Item back to host activity
-    private OnFragmentInteractionListener mListener;
+    private ItemClickListener mListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*since on click action on any item of list is to be communicated back
-        so making sure the host activity has implemented the interface*/
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof ItemClickListener) {
+            mListener = (ItemClickListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
@@ -46,10 +39,10 @@ public class FragmentTopRecyclerItems extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.top_items_recycler_view);
         ArrayList<String> items = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
-            items.add("item " + (i + 1));
+            items.add("Item : " + (i + 1));
         }
 
-        TopItemAdapter mAdapter = new TopItemAdapter(items, mListener);
+        TopItemsAdapter mAdapter = new TopItemsAdapter(items, mListener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -61,8 +54,7 @@ public class FragmentTopRecyclerItems extends Fragment {
         mListener = null;
     }
 
-    //Used to communicate with host activity
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(String name);
+    public interface ItemClickListener {
+        void onClick(String name);
     }
 }

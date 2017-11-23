@@ -1,6 +1,5 @@
 package dass.vikeshkumar.intelimentapplication.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import dass.vikeshkumar.intelimentapplication.adapter.ViewPagerAdapter;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
- * Created by vikesh on 22-11-2017.
  * Fragment hosting view pager
  */
 public class ViewPagerFragment extends Fragment {
@@ -25,19 +23,8 @@ public class ViewPagerFragment extends Fragment {
 
     }
 
-    //For creating fragment with arguments here using newInstance() constructor
-    public static ViewPagerFragment newInstance(int index, String title) {
-        ViewPagerFragment f = new ViewPagerFragment();
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("pageNo", index);
-        f.setArguments(args);
-        return f;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pageNo = getArguments().getInt("pageNo");
         return inflater.inflate(R.layout.fragment_default, container, false);
     }
 
@@ -45,8 +32,8 @@ public class ViewPagerFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ViewPager viewpager = view.findViewById(R.id.viewpager);
         CircleIndicator indicator = view.findViewById(R.id.indicator);
-        viewpager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 4));
+        viewpager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager()));
         indicator.setViewPager(viewpager);
-        viewpager.setCurrentItem(pageNo);
+        viewpager.setCurrentItem(0);
     }
 }

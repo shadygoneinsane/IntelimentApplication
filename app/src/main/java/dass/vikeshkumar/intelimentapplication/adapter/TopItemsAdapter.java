@@ -11,16 +11,13 @@ import java.util.ArrayList;
 import dass.vikeshkumar.intelimentapplication.R;
 import dass.vikeshkumar.intelimentapplication.fragments.FragmentTopRecyclerItems;
 
-/**
- * Created by vikesh on 22-11-2017.
- */
-public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.ViewHolder> {
+public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHolder> {
 
-    private ArrayList<String> mDataSet;
-    private FragmentTopRecyclerItems.OnFragmentInteractionListener mListener;
+    private ArrayList<String> itemsDataSet;
+    private FragmentTopRecyclerItems.ItemClickListener mListener;
 
-    public TopItemAdapter(ArrayList<String> dataSet, FragmentTopRecyclerItems.OnFragmentInteractionListener Listener) {
-        this.mDataSet = dataSet;
+    public TopItemsAdapter(ArrayList<String> dataSet, FragmentTopRecyclerItems.ItemClickListener Listener) {
+        this.itemsDataSet = dataSet;
         this.mListener = Listener;
     }
 
@@ -35,20 +32,17 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return new TopItemAdapter.ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_item_top_list, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_item_top_list, viewGroup, false));
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final TopItemAdapter.ViewHolder viewHolder, final int position) {
-        String object = mDataSet.get(position);
-        viewHolder.tV_name.setText(object);
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+        viewHolder.tV_name.setText(itemsDataSet.get(position));
         viewHolder.tV_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(mContext, "Clicked at item " + position, Toast.LENGTH_SHORT).show();
                 if (mListener != null) {
-                    mListener.onFragmentInteraction("Clicked at item " + (position + 1));
+                    mListener.onClick("Clicked at Item " + (position + 1));
                 }
             }
         });
@@ -56,6 +50,6 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return itemsDataSet.size();
     }
 }

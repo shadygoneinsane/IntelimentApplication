@@ -14,10 +14,9 @@ import dass.vikeshkumar.intelimentapplication.fragments.FragmentTopRecyclerItems
 import dass.vikeshkumar.intelimentapplication.fragments.ViewPagerFragment;
 
 /**
- * Created by vikesh on 22-11-2017.
  * Main Activity for Scenario 1
  */
-public class ActivityScenario1 extends AppCompatActivity implements FragmentTopRecyclerItems.OnFragmentInteractionListener, View.OnClickListener {
+public class ActivityScenario1 extends AppCompatActivity implements FragmentTopRecyclerItems.ItemClickListener, View.OnClickListener {
     private TextView item_name_from_list_top;
     private LinearLayout parent_item5;
     private String fragmentName;
@@ -42,7 +41,7 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_item1, fragment);
 
-        fragment = ViewPagerFragment.newInstance(0, "");
+        fragment = Fragment.instantiate(this, ViewPagerFragment.class.getName());
         fragmentTransaction.replace(R.id.fragment_item2, fragment);
         fragmentTransaction.commit();
 
@@ -52,12 +51,10 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
             parent_item5.setBackgroundColor(referenceForColor);
             item_name_from_list_top.setText(fragmentName);
         }
-
     }
 
     @Override
-    public void onFragmentInteraction(final String name) {
-        //running this action on the activity UI thread.
+    public void onClick(final String name) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -92,8 +89,4 @@ public class ActivityScenario1 extends AppCompatActivity implements FragmentTopR
         savedInstanceState.putString("fragmentName", fragmentName);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

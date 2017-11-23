@@ -17,8 +17,8 @@
     <string name="open_map_app">Maps app</string>
     <string name="navigate">Navigate</string>
     <string name="oo">00</string>
-    <string name="train">Train :</string>
-    <string name="car">Car :</string>
+    <string name="train">"Train : "</string>
+    <string name="car">"Car : "</string>
     <string name="mode_of_transport">Mode Of Transport</string>
     <string name="no_network">No Network</string>
 
